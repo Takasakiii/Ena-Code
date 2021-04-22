@@ -4,7 +4,7 @@ use std::env;
 pub struct Args {
     path: String,
     profile: String,
-    frags: Vec<String>
+    flags: Vec<String>
 }
 
 impl Args {
@@ -15,7 +15,7 @@ impl Args {
 
         let path;
         let profile;
-        let frags;
+        let flags;
 
         if args.len() > 1 {
             profile = args[1].clone();
@@ -30,16 +30,16 @@ impl Args {
         }
 
         if args.len() > 3 {
-            frags = args[3..]
+            flags = args[3..]
                 .to_vec();
         } else {
-            frags = Vec::new();
+            flags = Vec::new();
         }
 
         Self {
             path,
             profile,
-            frags
+            flags
         }
     }
 
@@ -53,7 +53,7 @@ impl Args {
 
     #[allow(dead_code)]
     pub fn has_frag(&self, frag: &str) -> bool {
-        let item = self.frags
+        let item = self.flags
             .iter()
             .find(|e| **e == frag.to_string());
         
