@@ -1,4 +1,20 @@
 use std::env;
+use clap::Clap;
+
+#[derive(Debug, Clap)]
+pub struct NewArgs {
+    path: String,
+    profile: String,
+    cmd: String,
+    args: Vec<String>
+}
+
+
+impl NewArgs {
+    pub fn build() -> () {
+
+    }
+}
 
 #[derive(Debug)]
 pub struct Args {

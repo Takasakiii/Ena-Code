@@ -9,6 +9,7 @@ edition = "2018"
 [dependencies]
 serde_yaml = "^0.8.17"
 dirs = "^3.0.1"
+clap = "3.0.0-beta.2"
 
 [dependencies.serde]
 version = "^1.0.125"
