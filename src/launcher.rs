@@ -1,5 +1,8 @@
+use fs_extra::dir::{CopyOptions, copy};
+
 use crate::{arguments::Args, config::Config};
-use std::{path::Path, process::Command};
+use std::{path::{Path, PathBuf}, process::Command};
+use crate::dirs_and_files;
 
 pub fn launch(args: &Args, config: &Config) {
     let path = Path::new(&config.profiles_folder);
@@ -11,6 +14,12 @@ pub fn launch(args: &Args, config: &Config) {
     let configs_folder = configs_folder.to_str();
 
     if extension_folder.is_some() && configs_folder.is_some() {
+        if args.get_profile() != config.create_new_profile_from {
+            if !check_profile_exists(&args.get_profile()) && check_profile_exists(&config.create_new_profile_from) {
+                create_profile(&args.get_profile(), &config.create_new_profile_from)
+            }
+        }
+
         let cmd_exec = Command::new(&config.vs_code_path[..])
             .arg(args.get_path())
             .arg("--extensions-dir")
@@ -26,5 +35,33 @@ pub fn launch(args: &Args, config: &Config) {
 
     } else {
         println!("Um problema ao contruir o launch do visual studio code.")
+    }
+}
+
+fn get_profile_path(profile_name: &String) -> PathBuf {
+    dirs_and_files::create_or_get_ena_home_folder()
+        .unwrap()
+        .join("vs-code-profiles")
+        .join(profile_name)
+}
+
+fn check_profile_exists(profile_name: &String) -> bool {
+    let ena_folder = get_profile_path(profile_name);
+
+    let path = Path::new(&ena_folder);
+
+    path.is_dir()
+}
+
+fn create_profile(profile_name: &String, profile_fonte: &String) {
+    let dir_destino = get_profile_path(profile_name);
+    let dir_origin = get_profile_path(profile_fonte);
+    let mut options = CopyOptions::new();
+    options.skip_exist = true;
+    options.overwrite = false;
+    options.copy_inside = true;
+
+    if let Err(why) = copy(&dir_origin, &dir_destino, &options) {
+        println!("Não foi possivel derivar do profile: {}, iniciando a partir de um novo.\n{{Origem: {:?}, Destinho: {:?}}}\n\nMotivo: {}", profile_fonte, dir_origin, dir_destino, why);
     }
 }

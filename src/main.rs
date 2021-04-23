@@ -6,6 +6,8 @@ mod dirs_and_files;
 use arguments::Args;
 use config::Config;
 
+extern crate fs_extra;
+
 fn main() {
     println!("Projeto ainda esta em desenvolvimento, caso bugs contatar meu github (https://github.com/Takasakiii/Ena-Code), ignorar coisas como logs e config flags sem uso.");
     let args = Args::build();
