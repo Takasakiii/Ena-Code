@@ -1,6 +1,7 @@
 mod arguments;
 mod config;
 mod launcher;
+mod dirs_and_files;
 
 use arguments::Args;
 use config::Config;
