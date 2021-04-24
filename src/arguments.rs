@@ -52,18 +52,18 @@ impl Args {
     }
 
     pub fn get_flag(&self, index: usize) -> String {
-        self.frags[index].clone()
+        self.flags[index].clone()
     }
 
     pub fn has_flag_in_index(&self, index: usize, flag: &str) -> bool {
-        if self.frags.len() > index {
-            self.frags[index] == flag.to_string()
+        if self.flags.len() > index {
+            self.flags[index] == flag.to_string()
         } else {
             false
         }
     }
 
     pub fn exists_flag_in_index(&self, index: usize) -> bool {
-        self.frags.len() > index
+        self.flags.len() > index
     }
 }
