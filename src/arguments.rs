@@ -1,4 +1,4 @@
-use std::env;
+use std::{env, usize};
 
 #[derive(Debug)]
 pub struct Args {
@@ -11,7 +11,7 @@ impl Args {
     pub fn build() -> Self {
         let args: Vec<String> = env::args()
             .collect();
-        
+
 
         let path;
         let profile;
@@ -22,7 +22,7 @@ impl Args {
         } else {
             profile = "Default".into();
         }
-        
+
         if args.len() > 2 {
             path = args[2].clone();
         } else {
@@ -51,15 +51,19 @@ impl Args {
         self.profile.clone()
     }
 
-    #[allow(dead_code)]
-    pub fn has_frag(&self, frag: &str) -> bool {
-        let item = self.flags
-            .iter()
-            .find(|e| **e == frag.to_string());
-        
-        match item {
-            Some(_) => true,
-            None => false
+    pub fn get_flag(&self, index: usize) -> String {
+        self.flags[index].clone()
+    }
+
+    pub fn has_flag_in_index(&self, index: usize, flag: &str) -> bool {
+        if self.flags.len() > index {
+            self.flags[index] == flag.to_string()
+        } else {
+            false
         }
+    }
+
+    pub fn exists_flag_in_index(&self, index: usize) -> bool {
+        self.flags.len() > index
     }
 }
