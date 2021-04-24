@@ -14,11 +14,11 @@ pub fn launch(args: &Args, config: &Config) {
     let configs_folder = configs_folder.to_str();
 
     if extension_folder.is_some() && configs_folder.is_some() {
-        if args.get_profile() != config.create_new_profile_from {
-            if !check_profile_exists(&args.get_profile()) && check_profile_exists(&config.create_new_profile_from) {
-                create_profile(&args.get_profile(), &config.create_new_profile_from)
-            }
+        match get_profile_args(args) {
+            None => copy_profile(args, &config.create_new_profile_from),
+            Some(profile_in_args) => copy_profile(args, &profile_in_args)
         }
+
 
         let cmd_exec = Command::new(&config.vs_code_path[..])
             .arg(args.get_path())
@@ -63,5 +63,21 @@ fn create_profile(profile_name: &String, profile_fonte: &String) {
 
     if let Err(why) = copy(&dir_origin, &dir_destino, &options) {
         println!("Não foi possivel derivar do profile: {}, iniciando a partir de um novo.\n{{Origem: {:?}, Destinho: {:?}}}\n\nMotivo: {}", profile_fonte, dir_origin, dir_destino, why);
+    }
+}
+
+fn get_profile_args(args: &Args) -> Option<String> {
+    if args.has_flag_in_index(0, "-b") && args.exists_flag_in_index(1) {
+        Some(args.get_flag(1))
+    } else {
+        None
+    }
+}
+
+fn copy_profile(args: &Args, profile_origin: &String) {
+    if args.get_profile() != *profile_origin {
+        if !check_profile_exists(&args.get_profile()) && check_profile_exists(profile_origin) {
+            create_profile(&args.get_profile(), profile_origin)
+        }
     }
 }
