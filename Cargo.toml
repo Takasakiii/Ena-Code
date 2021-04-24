@@ -9,7 +9,7 @@ homepage = "https://github.com/Takasakiii/Ena-Code"
 documentation = "https://github.com/Takasakiii/Ena-Code"
 repository = "https://github.com/Takasakiii/Ena-Code.git"
 readme = "README.md"
-keywords = ["dev", "editor", "visual", "studio", "code", "profile", "switch"]
+keywords = ["dev", "editor", "code", "profile", "switch"]
 categories = ["command-line-utilities"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
