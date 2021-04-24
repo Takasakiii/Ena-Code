@@ -3,6 +3,14 @@ name = "ecode"
 version = "0.1.0"
 authors = ["Takasakiii <lucasmc2709@live.com>"]
 edition = "2018"
+license-file = "LICENSE"
+description = "Ena Code simple Visual Studio Code profile switcher."
+homepage = "https://github.com/Takasakiii/Ena-Code"
+documentation = "https://github.com/Takasakiii/Ena-Code"
+repository = "https://github.com/Takasakiii/Ena-Code.git"
+readme = "README.md"
+keywords = ["dev", "editor", "visual", "studio", "code", "profile", "switch"]
+categories = ["command-line-utilities"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
