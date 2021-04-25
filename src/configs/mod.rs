@@ -3,3 +3,4 @@ mod config;
 mod enarc;
 
 pub use config::Config;
+pub use enarc::Enarc;
