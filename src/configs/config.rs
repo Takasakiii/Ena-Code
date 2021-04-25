@@ -1,6 +1,6 @@
 use std::{fs::{self, File}, io::prelude::*, path::{Path, PathBuf}};
 use serde::{Serialize, Deserialize};
-use crate::dirs_and_files;
+use crate::configs::dirs_and_files;
 
 #[derive(Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]

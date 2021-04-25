@@ -1,8 +1,7 @@
 use fs_extra::dir::{CopyOptions, copy};
 
-use crate::{arguments::Args, config::Config};
+use crate::{arguments::Args, configs::{Config, dirs_and_files}};
 use std::{path::{Path, PathBuf}, process::Command};
-use crate::dirs_and_files;
 
 pub fn launch(args: &Args, config: &Config) {
     let path = Path::new(&config.profiles_folder);
