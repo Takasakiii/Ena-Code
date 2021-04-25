@@ -1,10 +1,9 @@
 mod arguments;
-mod config;
+mod configs;
 mod launcher;
-mod dirs_and_files;
 
 use arguments::Args;
-use config::Config;
+use configs::Config;
 
 extern crate fs_extra;
 
