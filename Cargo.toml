@@ -19,6 +19,7 @@ categories = ["command-line-utilities"]
 serde_yaml = "^0.8.17"
 fs_extra = "^1.2.0"
 dirs = "^3.0.1"
+clap = "^3.0.0-beta.2"
 
 [dependencies.serde]
 version = "^1.0.125"
