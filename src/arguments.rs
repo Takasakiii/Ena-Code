@@ -2,7 +2,7 @@ use std::{env, usize};
 
 #[derive(Debug)]
 pub struct Args {
-    path: String,
+    path: Option<String>,
     profile: String,
     flags: Vec<String>
 }
@@ -24,9 +24,9 @@ impl Args {
         }
 
         if args.len() > 2 {
-            path = args[2].clone();
+            path = Some(args[2].clone());
         } else {
-            path = ".".into();
+            path = None;
         }
 
         if args.len() > 3 {
@@ -43,7 +43,7 @@ impl Args {
         }
     }
 
-    pub fn get_path(&self) -> String {
+    pub fn get_path(&self) -> Option<String> {
         self.path.clone()
     }
 

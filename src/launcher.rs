@@ -19,8 +19,13 @@ pub fn launch(args: &Args, config: &Config) {
         }
 
 
-        let cmd_exec = Command::new(&config.vs_code_path[..])
-            .arg(args.get_path())
+        let mut cmd_exec = Command::new(&config.vs_code_path[..]);
+
+        if let Some(path) = args.get_path() {
+            cmd_exec.arg(path);
+        }
+
+        let cmd_exec = cmd_exec
             .arg("--extensions-dir")
             .arg(extension_folder.unwrap())
             .arg("--user-data-dir")
