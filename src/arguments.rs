@@ -1,69 +1,26 @@
-use std::{env, usize};
+use clap::{Clap, AppSettings};
 
-#[derive(Debug)]
-pub struct Args {
-    path: String,
+#[derive(Clap, Debug)]
+#[clap(name = "Ena-Code", about = "Um simples alternador de profile para Visual Studio Code\n\nAinda em alfa.")]
+#[clap(version = env!("CARGO_PKG_VERSION"), author = "Takasakiii <lucasmc2709@live.com>")]
+#[clap(setting = AppSettings::ColoredHelp)]
+pub struct LaunchOptions {
+    #[clap(short, long, about = "Habilita o modo verbose para depuração.")]
+    verbose: bool,
+    #[clap(default_value = "Default", about = "Nome do profile")]
     profile: String,
-    flags: Vec<String>
+    #[clap(default_value = ".", about = "Pasta para usar de workflow.")]
+    path: String,
+    #[clap(short, long, about = "Muda o derive do profile 'Default' para outro.")]
+    base_derive: Option<String>
 }
 
-impl Args {
+impl LaunchOptions {
     pub fn build() -> Self {
-        let args: Vec<String> = env::args()
-            .collect();
-
-
-        let path;
-        let profile;
-        let flags;
-
-        if args.len() > 1 {
-            profile = args[1].clone();
-        } else {
-            profile = "Default".into();
+        let args = LaunchOptions::parse();
+        if args.verbose {
+            println!("{:?}", args);
         }
-
-        if args.len() > 2 {
-            path = args[2].clone();
-        } else {
-            path = ".".into();
-        }
-
-        if args.len() > 3 {
-            flags = args[3..]
-                .to_vec();
-        } else {
-            flags = Vec::new();
-        }
-
-        Self {
-            path,
-            profile,
-            flags
-        }
-    }
-
-    pub fn get_path(&self) -> String {
-        self.path.clone()
-    }
-
-    pub fn get_profile(&self) -> String {
-        self.profile.clone()
-    }
-
-    pub fn get_flag(&self, index: usize) -> String {
-        self.flags[index].clone()
-    }
-
-    pub fn has_flag_in_index(&self, index: usize, flag: &str) -> bool {
-        if self.flags.len() > index {
-            self.flags[index] == flag.to_string()
-        } else {
-            false
-        }
-    }
-
-    pub fn exists_flag_in_index(&self, index: usize) -> bool {
-        self.flags.len() > index
+        args
     }
 }
