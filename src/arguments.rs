@@ -9,8 +9,8 @@ pub struct LaunchOptions {
     pub verbose: bool,
     #[clap(default_value = "Default", about = "Profile name.")]
     pub profile: String,
-    #[clap(default_value = ".", about = "Workflow folder. ")]
-    pub path: String,
+    #[clap(about = "Workflow folder. ")]
+    pub path: Option<String>,
     #[clap(short, long, about = "Changes the 'derive' of the 'Default' profile to another one.")]
     pub base_derive: Option<String>
 }

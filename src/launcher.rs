@@ -5,7 +5,7 @@ use std::{path::{Path, PathBuf}, process::Command};
 
 pub fn launch(args: &LaunchOptions, config: &Config) {
     let path = Path::new(&config.profiles_folder);
-    let joined_path = path.join(&remove_caracteres(&args.profile));
+    let joined_path = path.join(&remove_caracteres(&args.profile, &config));
     let extension_folder = joined_path.join("extensions");
     let configs_folder = joined_path.join("configs");
 
@@ -19,12 +19,21 @@ pub fn launch(args: &LaunchOptions, config: &Config) {
             Some(profile_in_args) => copy_profile(args, profile_in_args)
         }
 
+        let path_workflow = match &args.path {
+            Some(path) => &path[..],
+            None => if config.default_current_folder {
+                "."
+            } else {
+                ""
+            }
+        };
+
         if args.verbose {
-            println!("DirsFinal: {{ex: {}, cf: {}}}", extension_folder.unwrap(), configs_folder.unwrap());
+            println!("DirsFinal: {{ex: {}, cf: {}, pl: {}}}", extension_folder.unwrap(), configs_folder.unwrap(), path_workflow);
         }
 
         let cmd_exec = Command::new(&config.vs_code_path[..])
-            .arg(&args.path)
+            .arg(path_workflow)
             .arg("--extensions-dir")
             .arg(extension_folder.unwrap())
             .arg("--user-data-dir")
@@ -79,8 +88,12 @@ fn copy_profile(args: &LaunchOptions, profile_origin: &String) {
     }
 }
 
-fn remove_caracteres(path: &String) -> String {
+fn remove_caracteres(path: &String, config: &Config) -> String {
     let mut string_path = path.to_string();
     string_path.retain(|c| !r#"(),".;:'<>/\|?*"#.contains(c));
+
+    if string_path == "" {
+        string_path = config.create_new_profile_from.clone();
+    }
     string_path
 }

@@ -8,6 +8,6 @@ extern crate fs_extra;
 
 fn main() {
     let args = LaunchOptions::build();
-    let config = Config::get_config();
+    let config = Config::get_config(args.verbose);
     launcher::launch(&args, &config);
 }
