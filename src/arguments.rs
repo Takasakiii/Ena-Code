@@ -1,17 +1,17 @@
 use clap::{Clap, AppSettings};
 
 #[derive(Clap, Debug)]
-#[clap(name = "Ena-Code", about = "Um simples alternador de profile para Visual Studio Code\n\nAinda em alfa.")]
+#[clap(name = "Ena-Code", about = "A simple profile switcher for Visual Studio Code\n\nStill in alpha.")]
 #[clap(version = env!("CARGO_PKG_VERSION"), author = "Takasakiii <lucasmc2709@live.com>")]
 #[clap(setting = AppSettings::ColoredHelp)]
 pub struct LaunchOptions {
-    #[clap(short, long, about = "Habilita o modo verbose para depuração.")]
+    #[clap(short, long, about = "Enables verbose mode for debugging.")]
     pub verbose: bool,
-    #[clap(default_value = "Default", about = "Nome do profile")]
+    #[clap(default_value = "Default", about = "Profile name.")]
     pub profile: String,
-    #[clap(default_value = ".", about = "Pasta para usar de workflow.")]
+    #[clap(default_value = ".", about = "Workflow folder. ")]
     pub path: String,
-    #[clap(short, long, about = "Muda o derive do profile 'Default' para outro.")]
+    #[clap(short, long, about = "Changes the 'derive' of the 'Default' profile to another one.")]
     pub base_derive: Option<String>
 }
 
