@@ -7,7 +7,7 @@ pub fn launch(args: &LaunchOptions, config: &Config) {
     let path = Path::new(&config.profiles_folder);
     let joined_path = path.join(&remove_caracteres(&args.profile, &config));
     let extension_folder = joined_path.join("extensions");
-    let configs_folder = joined_path.join("configs");
+    let configs_folder = config_folder(&config, &joined_path, &path);
 
     let extension_folder = extension_folder.to_str();
     let configs_folder = configs_folder.to_str();
@@ -96,4 +96,14 @@ fn remove_caracteres(path: &String, config: &Config) -> String {
         string_path = config.create_new_profile_from.clone();
     }
     string_path
+}
+
+fn config_folder(config: &Config, profile_path: &PathBuf, profiles_base_folder: &Path) -> PathBuf {
+    if config.shared_profiles_configs {
+        let default_profile_folder = profiles_base_folder.join(&config.create_new_profile_from);
+        default_profile_folder.join("configs")
+
+    } else {
+        profile_path.join("configs")
+    }
 }

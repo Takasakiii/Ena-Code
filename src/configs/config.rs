@@ -8,7 +8,8 @@ pub struct Config {
     pub profiles_folder: String,
     pub create_new_profile_from: String,
     pub vs_code_path: String,
-    pub default_current_folder: bool
+    pub default_current_folder: bool,
+    pub shared_profiles_configs: bool
 }
 
 impl Config {
@@ -25,7 +26,8 @@ impl Config {
             create_new_profile_from: "Default".into(),
             profiles_folder: dirs_and_files::path_to_string(profiles_dir),
             vs_code_path: dirs_and_files::path_to_string(bin_code_path),
-            default_current_folder: false
+            default_current_folder: false,
+            shared_profiles_configs: false
         }
     }
 
