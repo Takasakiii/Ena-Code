@@ -2,12 +2,16 @@ use std::{fs::{self, File}, io::prelude::*, path::{Path, PathBuf}};
 use serde::{Serialize, Deserialize};
 use crate::configs::dirs_and_files;
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct Config {
     pub profiles_folder: String,
     pub create_new_profile_from: String,
-    pub vs_code_path: String
+    pub vs_code_path: String,
+    #[serde(default="bool::default")]
+    pub default_current_folder: bool,
+    #[serde(default="bool::default")]
+    pub shared_profiles_configs: bool
 }
 
 impl Config {
@@ -23,7 +27,9 @@ impl Config {
         Self {
             create_new_profile_from: "Default".into(),
             profiles_folder: dirs_and_files::path_to_string(profiles_dir),
-            vs_code_path: dirs_and_files::path_to_string(bin_code_path)
+            vs_code_path: dirs_and_files::path_to_string(bin_code_path),
+            default_current_folder: false,
+            shared_profiles_configs: false
         }
     }
 
@@ -61,11 +67,15 @@ impl Config {
 
     }
 
-    pub fn get_config() -> Self {
+    pub fn get_config(verbose: bool) -> Self {
         if !Path::new(&get_ena_config_path()).exists() {
             Self::create_config();
         }
-        Self::get_config_raw()
+        let config = Self::get_config_raw();
+        if verbose {
+            println!("{:?}", &config)
+        }
+        config
     }
 }
 

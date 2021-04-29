@@ -1,26 +1,39 @@
 use fs_extra::dir::{CopyOptions, copy};
 
-use crate::{arguments::Args, configs::{Config, dirs_and_files}};
+use crate::{arguments::LaunchOptions, configs::{Config, dirs_and_files}};
 use std::{path::{Path, PathBuf}, process::Command};
 
-pub fn launch(args: &Args, config: &Config) {
+pub fn launch(args: &LaunchOptions, config: &Config) {
     let path = Path::new(&config.profiles_folder);
-    let joined_path = path.join(args.get_profile());
+    let joined_path = path.join(&remove_caracteres(&args.profile, &config));
     let extension_folder = joined_path.join("extensions");
-    let configs_folder = joined_path.join("configs");
+    let configs_folder = config_folder(&config, &joined_path, &path);
 
     let extension_folder = extension_folder.to_str();
     let configs_folder = configs_folder.to_str();
 
+
     if extension_folder.is_some() && configs_folder.is_some() {
-        match get_profile_args(args) {
+        match &args.base_derive {
             None => copy_profile(args, &config.create_new_profile_from),
-            Some(profile_in_args) => copy_profile(args, &profile_in_args)
+            Some(profile_in_args) => copy_profile(args, profile_in_args)
         }
 
+        let path_workflow = match &args.path {
+            Some(path) => &path[..],
+            None => if config.default_current_folder {
+                "."
+            } else {
+                ""
+            }
+        };
+
+        if args.verbose {
+            println!("DirsFinal: {{ex: {}, cf: {}, pl: {}}}", extension_folder.unwrap(), configs_folder.unwrap(), path_workflow);
+        }
 
         let cmd_exec = Command::new(&config.vs_code_path[..])
-            .arg(args.get_path())
+            .arg(path_workflow)
             .arg("--extensions-dir")
             .arg(extension_folder.unwrap())
             .arg("--user-data-dir")
@@ -29,7 +42,9 @@ pub fn launch(args: &Args, config: &Config) {
 
         match cmd_exec {
             Err(why) => println!("Problema ao iniciar o processo do visual studio code: {:?}", why),
-            Ok(out) => println!("{:?}", out)
+            Ok(out) => if args.verbose {
+                println!("{:?}", out)
+            }
         }
 
     } else {
@@ -65,18 +80,30 @@ fn create_profile(profile_name: &String, profile_fonte: &String) {
     }
 }
 
-fn get_profile_args(args: &Args) -> Option<String> {
-    if args.has_flag_in_index(0, "-b") && args.exists_flag_in_index(1) {
-        Some(args.get_flag(1))
-    } else {
-        None
+fn copy_profile(args: &LaunchOptions, profile_origin: &String) {
+    if args.profile != *profile_origin {
+        if !check_profile_exists(&args.profile) && check_profile_exists(profile_origin) {
+            create_profile(&args.profile, profile_origin)
+        }
     }
 }
 
-fn copy_profile(args: &Args, profile_origin: &String) {
-    if args.get_profile() != *profile_origin {
-        if !check_profile_exists(&args.get_profile()) && check_profile_exists(profile_origin) {
-            create_profile(&args.get_profile(), profile_origin)
-        }
+fn remove_caracteres(path: &String, config: &Config) -> String {
+    let mut string_path = path.to_string();
+    string_path.retain(|c| !r#"(),".;:'<>/\|?*"#.contains(c));
+
+    if string_path == "" {
+        string_path = config.create_new_profile_from.clone();
+    }
+    string_path
+}
+
+fn config_folder(config: &Config, profile_path: &PathBuf, profiles_base_folder: &Path) -> PathBuf {
+    if config.shared_profiles_configs {
+        let default_profile_folder = profiles_base_folder.join(&config.create_new_profile_from);
+        default_profile_folder.join("configs")
+
+    } else {
+        profile_path.join("configs")
     }
 }
