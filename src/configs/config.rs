@@ -8,7 +8,9 @@ pub struct Config {
     pub profiles_folder: String,
     pub create_new_profile_from: String,
     pub vs_code_path: String,
+    #[serde(default="bool::default")]
     pub default_current_folder: bool,
+    #[serde(default="bool::default")]
     pub shared_profiles_configs: bool
 }
 
