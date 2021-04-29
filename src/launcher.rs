@@ -5,7 +5,7 @@ use std::{path::{Path, PathBuf}, process::Command};
 
 pub fn launch(args: &LaunchOptions, config: &Config) {
     let path = Path::new(&config.profiles_folder);
-    let joined_path = path.join(&args.profile);
+    let joined_path = path.join(&remove_caracteres(&args.profile));
     let extension_folder = joined_path.join("extensions");
     let configs_folder = joined_path.join("configs");
 
@@ -71,18 +71,16 @@ fn create_profile(profile_name: &String, profile_fonte: &String) {
     }
 }
 
-// fn get_profile_args(args: &LaunchOptions) -> Option<String> {
-//     if args.has_flag_in_index(0, "-b") && args.exists_flag_in_index(1) {
-//         Some(args.get_flag(1))
-//     } else {
-//         None
-//     }
-// }
-
 fn copy_profile(args: &LaunchOptions, profile_origin: &String) {
     if args.profile != *profile_origin {
         if !check_profile_exists(&args.profile) && check_profile_exists(profile_origin) {
             create_profile(&args.profile, profile_origin)
         }
     }
+}
+
+fn remove_caracteres(path: &String) -> String {
+    let mut string_path = path.to_string();
+    string_path.retain(|c| !r#"(),".;:'<>/\|?*"#.contains(c));
+    string_path
 }
