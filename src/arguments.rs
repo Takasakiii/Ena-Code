@@ -6,13 +6,13 @@ use clap::{Clap, AppSettings};
 #[clap(setting = AppSettings::ColoredHelp)]
 pub struct LaunchOptions {
     #[clap(short, long, about = "Habilita o modo verbose para depuração.")]
-    verbose: bool,
+    pub verbose: bool,
     #[clap(default_value = "Default", about = "Nome do profile")]
-    profile: String,
+    pub profile: String,
     #[clap(default_value = ".", about = "Pasta para usar de workflow.")]
-    path: String,
+    pub path: String,
     #[clap(short, long, about = "Muda o derive do profile 'Default' para outro.")]
-    base_derive: Option<String>
+    pub base_derive: Option<String>
 }
 
 impl LaunchOptions {
