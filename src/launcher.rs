@@ -33,7 +33,9 @@ pub fn launch(args: &LaunchOptions, config: &Config) {
 
         match cmd_exec {
             Err(why) => println!("Problema ao iniciar o processo do visual studio code: {:?}", why),
-            Ok(out) => println!("{:?}", out)
+            Ok(out) => if args.verbose {
+                println!("{:?}", out)
+            }
         }
 
     } else {
