@@ -1,6 +1,10 @@
-use std::{fs::{self, File}, io::prelude::*, path::{Path, PathBuf}};
-use serde::{Serialize, Deserialize};
 use crate::configs::dirs_and_files;
+use serde::{Deserialize, Serialize};
+use std::{
+    fs::{self, File},
+    io::prelude::*,
+    path::{Path, PathBuf},
+};
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
@@ -8,17 +12,16 @@ pub struct Config {
     pub profiles_folder: String,
     pub create_new_profile_from: String,
     pub vs_code_path: String,
-    #[serde(default="bool::default")]
+    #[serde(default = "bool::default")]
     pub default_current_folder: bool,
-    #[serde(default="bool::default")]
-    pub shared_profiles_configs: bool
+    #[serde(default = "bool::default")]
+    pub shared_profiles_configs: bool,
 }
 
 impl Config {
     fn new() -> Self {
         let bin_name = dirs_and_files::get_bin_or_cmd_name();
-        let bin_code_path = dirs_and_files::find_it(bin_name)
-            .unwrap_or(PathBuf::default());
+        let bin_code_path = dirs_and_files::find_it(bin_name).unwrap_or_default();
 
         let profiles_dir = dirs_and_files::create_or_get_ena_home_folder()
             .unwrap()
@@ -29,7 +32,7 @@ impl Config {
             profiles_folder: dirs_and_files::path_to_string(profiles_dir),
             vs_code_path: dirs_and_files::path_to_string(bin_code_path),
             default_current_folder: false,
-            shared_profiles_configs: false
+            shared_profiles_configs: false,
         }
     }
 
@@ -61,10 +64,9 @@ impl Config {
                         println!("Config não pode ser gravado, {:?}", why);
                     }
                 }
-            },
-            Err(why) => println!("Erro ao criar config.yml, {:?}", why)
+            }
+            Err(why) => println!("Erro ao criar config.yml, {:?}", why),
         }
-
     }
 
     pub fn get_config(verbose: bool) -> Self {

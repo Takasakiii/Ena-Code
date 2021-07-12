@@ -1,8 +1,8 @@
 mod arguments;
 mod configs;
 mod launcher;
-use configs::Config;
 use arguments::LaunchOptions;
+use configs::Config;
 
 extern crate fs_extra;
 

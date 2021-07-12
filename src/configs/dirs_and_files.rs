@@ -1,25 +1,28 @@
-use std::{env, path::{Path, PathBuf}, fs};
 use super::Enarc;
+use std::{
+    env, fs,
+    path::{Path, PathBuf},
+};
 
 pub fn path_to_string(path: PathBuf) -> String {
-    path
-        .to_str()
-        .unwrap_or("")
-        .to_string()
+    path.to_str().unwrap_or("").to_string()
 }
 
 pub fn find_it<P>(exe_name: P) -> Option<PathBuf>
-    where P: AsRef<Path>
+where
+    P: AsRef<Path>,
 {
     env::var_os("PATH").and_then(|paths| {
-        env::split_paths(&paths).filter_map(|dir| {
-            let full_path = dir.join(&exe_name);
-            if full_path.is_file() {
-                Some(full_path)
-            } else {
-                None
-            }
-        }).next()
+        env::split_paths(&paths)
+            .filter_map(|dir| {
+                let full_path = dir.join(&exe_name);
+                if full_path.is_file() {
+                    Some(full_path)
+                } else {
+                    None
+                }
+            })
+            .next()
     })
 }
 
@@ -35,7 +38,7 @@ fn get_home_dir() -> Result<PathBuf, String> {
     let home_dir = dirs::home_dir();
     match home_dir {
         None => Err("Não foi possivel localizar a pasta home do usuario.".into()),
-        Some(data) => Ok(data)
+        Some(data) => Ok(data),
     }
 }
 
@@ -43,7 +46,7 @@ fn read_enarc(path_mod: &mut PathBuf) -> Result<(), Box<dyn std::error::Error>> 
     if let Ok(p) = check_and_get_enarc() {
         let raw_enarc = fs::read_to_string(p)?;
         let enarc = Enarc::from_string(raw_enarc)?;
-        *path_mod =  PathBuf::from(enarc.ena_home_path);
+        *path_mod = PathBuf::from(enarc.ena_home_path);
     }
     Ok(())
 }
@@ -73,4 +76,3 @@ fn check_and_get_enarc() -> Result<PathBuf, String> {
         Err("O arquivo enarc não existe".into())
     }
 }
-
