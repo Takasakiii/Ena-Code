@@ -1,7 +1,10 @@
-use clap::{Clap, AppSettings};
+use clap::{AppSettings, Clap};
 
 #[derive(Clap, Debug)]
-#[clap(name = "Ena-Code", about = "A simple profile switcher for Visual Studio Code\n\nStill in alpha.")]
+#[clap(
+    name = "Ena-Code",
+    about = "A simple profile switcher for Visual Studio Code\n\nStill in alpha."
+)]
 #[clap(version = env!("CARGO_PKG_VERSION"), author = "Takasakiii <lucasmc2709@live.com>")]
 #[clap(setting = AppSettings::ColoredHelp)]
 pub struct LaunchOptions {
@@ -11,8 +14,12 @@ pub struct LaunchOptions {
     pub profile: String,
     #[clap(about = "Workflow folder. ")]
     pub path: Option<String>,
-    #[clap(short, long, about = "Changes the 'derive' of the 'Default' profile to another one.")]
-    pub base_derive: Option<String>
+    #[clap(
+        short,
+        long,
+        about = "Changes the 'derive' of the 'Default' profile to another one."
+    )]
+    pub base_derive: Option<String>,
 }
 
 impl LaunchOptions {

@@ -3,7 +3,7 @@ use serde::Deserialize;
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Enarc {
-    pub ena_home_path: String
+    pub ena_home_path: String,
 }
 
 impl Enarc {
