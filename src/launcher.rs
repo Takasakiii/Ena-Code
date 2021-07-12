@@ -59,9 +59,15 @@ pub fn launch(args: &LaunchOptions, config: &Config) {
         let cmd_exec = Command::new(&config.vs_code_path[..])
             .arg(path_workflow)
             .arg("--extensions-dir")
-            .arg(extension_folder.unwrap())
+            .arg(match extension_folder {
+                Some(val) => val,
+                None => panic!("called `Option::unwrap()` on a `None` value"),
+            })
             .arg("--user-data-dir")
-            .arg(configs_folder.unwrap())
+            .arg(match configs_folder {
+                Some(val) => val,
+                None => panic!("called `Option::unwrap()` on a `None` value"),
+            })
             .output();
 
         match cmd_exec {
@@ -80,14 +86,14 @@ pub fn launch(args: &LaunchOptions, config: &Config) {
     }
 }
 
-fn get_profile_path(profile_name: &String) -> PathBuf {
+fn get_profile_path(profile_name: &str) -> PathBuf {
     dirs_and_files::create_or_get_ena_home_folder()
         .unwrap()
         .join("vs-code-profiles")
         .join(profile_name)
 }
 
-fn check_profile_exists(profile_name: &String) -> bool {
+fn check_profile_exists(profile_name: &str) -> bool {
     let ena_folder = get_profile_path(profile_name);
 
     let path = Path::new(&ena_folder);
@@ -95,7 +101,7 @@ fn check_profile_exists(profile_name: &String) -> bool {
     path.is_dir()
 }
 
-fn create_profile(profile_name: &String, profile_fonte: &String) {
+fn create_profile(profile_name: &str, profile_fonte: &str) {
     let dir_destino = get_profile_path(profile_name);
     let dir_origin = get_profile_path(profile_fonte);
     let mut options = CopyOptions::new();
@@ -108,25 +114,26 @@ fn create_profile(profile_name: &String, profile_fonte: &String) {
     }
 }
 
-fn copy_profile(args: &LaunchOptions, profile_origin: &String) {
-    if args.profile != *profile_origin {
-        if !check_profile_exists(&args.profile) && check_profile_exists(profile_origin) {
-            create_profile(&args.profile, profile_origin)
-        }
+fn copy_profile(args: &LaunchOptions, profile_origin: &str) {
+    if args.profile != *profile_origin
+        && !check_profile_exists(&args.profile)
+        && check_profile_exists(profile_origin)
+    {
+        create_profile(&args.profile, profile_origin)
     }
 }
 
-fn remove_caracteres(path: &String, config: &Config) -> String {
+fn remove_caracteres(path: &str, config: &Config) -> String {
     let mut string_path = path.to_string();
     string_path.retain(|c| !r#"(),".;:'<>/\|?*"#.contains(c));
 
-    if string_path == "" {
+    if string_path.is_empty() {
         string_path = config.create_new_profile_from.clone();
     }
     string_path
 }
 
-fn config_folder(config: &Config, profile_path: &PathBuf, profiles_base_folder: &Path) -> PathBuf {
+fn config_folder(config: &Config, profile_path: &Path, profiles_base_folder: &Path) -> PathBuf {
     if config.shared_profiles_configs {
         let default_profile_folder = profiles_base_folder.join(&config.create_new_profile_from);
         default_profile_folder.join("configs")
