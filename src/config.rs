@@ -25,9 +25,9 @@ pub trait ConfigManipulation {
 pub struct DefaultConfig(Config);
 
 impl DefaultConfig {
-    pub fn new(path_finder: &impl PathFinder) -> EResult<Self> {
+    pub fn new(path_finder: &impl PathFinder, vs_code_name: &str) -> EResult<Self> {
         let vs_code_path = path_finder
-            .get_path()
+            .get_path(vs_code_name)
             .ok_or(EnaError::VsCodeNotFound)?
             .to_str()
             .ok_or(EnaError::PathToStrNone)?
