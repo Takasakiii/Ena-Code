@@ -17,3 +17,5 @@ categories = ["command-line-utilities"]
 
 [dependencies]
 dirs = "3.0.2"
+serde = { version = "1.0.126", features = ["derive"] }
+serde_yaml = "0.8.17"
