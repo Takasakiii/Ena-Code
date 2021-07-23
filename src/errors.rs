@@ -6,7 +6,10 @@ pub type EResult<T> = Result<T, EnaError>;
 #[derive(Debug)]
 pub enum EnaError {
     UnknowError(GenericError),
+    #[cfg(feature = "config_yml")]
     SerializeDeserializeConfigError(serde_yaml::Error),
+    #[cfg(feature = "config_json")]
+    SerializeDeserializeConfigError(serde_json::Error),
     HomeDirNotExists,
 }
 
@@ -28,8 +31,16 @@ impl From<EnaError> for GenericError {
     }
 }
 
+#[cfg(feature = "config_yml")]
 impl From<serde_yaml::Error> for EnaError {
     fn from(err: serde_yaml::Error) -> Self {
+        Self::SerializeDeserializeConfigError(err)
+    }
+}
+
+#[cfg(feature = "config_json")]
+impl From<serde_json::Error> for EnaError {
+    fn from(err: serde_json::Error) -> Self {
         Self::SerializeDeserializeConfigError(err)
     }
 }

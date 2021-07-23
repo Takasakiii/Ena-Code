@@ -20,17 +20,18 @@ pub trait ConfigManipulation {
     fn get_raw(self) -> String;
 }
 
-pub struct ConfigYML {
+pub struct ConfigReader {
     data: String,
 }
 
-impl ConfigYML {
+impl ConfigReader {
     pub fn new(data: String) -> Self {
         Self { data }
     }
 }
 
-impl ConfigManipulation for ConfigYML {
+#[cfg(feature = "config_yml")]
+impl ConfigManipulation for ConfigReader {
     fn get_config(&self) -> EResult<Config> {
         let deserialized_data = serde_yaml::from_str::<Config>(&self.data)?;
         Ok(deserialized_data)
@@ -38,6 +39,24 @@ impl ConfigManipulation for ConfigYML {
 
     fn set_config(&mut self, new_data: &Config) -> EResult<()> {
         let new_str = serde_yaml::to_string(new_data)?;
+        self.data = new_str;
+        Ok(())
+    }
+
+    fn get_raw(self) -> String {
+        self.data
+    }
+}
+
+#[cfg(feature = "config_json")]
+impl ConfigManipulation for ConfigReader {
+    fn get_config(&self) -> EResult<Config> {
+        let deserialized_data = serde_json::from_str::<Config>(&self.data)?;
+        Ok(deserialized_data)
+    }
+
+    fn set_config(&mut self, new_data: &Config) -> EResult<()> {
+        let new_str = serde_json::to_string(new_data)?;
         self.data = new_str;
         Ok(())
     }
