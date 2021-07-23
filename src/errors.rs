@@ -11,6 +11,8 @@ pub enum EnaError {
     #[cfg(feature = "config_json")]
     SerializeDeserializeConfigError(serde_json::Error),
     HomeDirNotExists,
+    VsCodeNotFound,
+    PathToStrNone,
 }
 
 impl Display for EnaError {
