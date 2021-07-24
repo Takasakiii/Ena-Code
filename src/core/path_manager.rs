@@ -41,6 +41,12 @@ impl EnaFolder {
     }
 }
 
+impl Default for EnaFolder {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl EnaFolderPath for EnaFolder {
     fn get_path(&self) -> &PathBuf {
         &self.path
