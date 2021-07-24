@@ -1,5 +1,5 @@
 use std::{
-    fs::{self, File},
+    fs::{self, DirEntry, File},
     io::{Read, Write},
     path::PathBuf,
 };
@@ -103,5 +103,55 @@ impl ConfigFilePath for ConfigFile {
 
     fn get_path(&self) -> &PathBuf {
         &self.path
+    }
+}
+
+pub struct Profile {
+    name: String,
+    path: PathBuf,
+}
+
+impl From<DirEntry> for Profile {
+    fn from(dir: DirEntry) -> Self {
+        let name = dir
+            .file_name()
+            .to_str()
+            .expect("Falha ao carregar um profile.")
+            .to_owned();
+        let path = dir.path();
+
+        Self { name, path }
+    }
+}
+
+pub struct Profiles {
+    path: PathBuf,
+    profiles: Vec<Profile>,
+}
+
+impl Profiles {
+    pub const PROFILE_FOLDER_NAME: &'static str = "vs-code-profiles";
+
+    fn get_path(ena_folder: &impl EnaFolderPath) -> PathBuf {
+        let ena_path = ena_folder.get_path();
+        ena_path.join(Self::PROFILE_FOLDER_NAME)
+    }
+
+    pub fn new(ena_folder: &impl EnaFolderPath) -> Self {
+        let path = Self::get_path(ena_folder);
+
+        if !path.exists() {
+            fs::create_dir(&path).expect("A pasta que armazena os profiles não pode ser criada.");
+        }
+
+        let sub_paths = fs::read_dir(&path)
+            .expect("Não foi possivel acessar a pasta dos profiles.")
+            .map(|el| Profile::from(el.expect("Problemas para ler os profiles.")))
+            .collect::<Vec<_>>();
+
+        Self {
+            path,
+            profiles: sub_paths,
+        }
     }
 }
