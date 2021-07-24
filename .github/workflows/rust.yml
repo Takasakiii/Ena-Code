@@ -11,12 +11,15 @@ env:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
+
+    - name: Format
+      run: cargo fmt
+    - name: Clippy
+      run: cargo clippy
     - name: Build
-      run: cargo build --verbose
+      run: cargo build
     - name: Run tests
-      run: cargo test --verbose
+      run: cargo test
