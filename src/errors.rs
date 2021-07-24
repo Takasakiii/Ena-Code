@@ -13,6 +13,7 @@ pub enum EnaError {
     HomeDirNotExists,
     VsCodeNotFound,
     PathToStrNone,
+    IoError(std::io::Error),
 }
 
 impl Display for EnaError {
@@ -44,5 +45,11 @@ impl From<serde_yaml::Error> for EnaError {
 impl From<serde_json::Error> for EnaError {
     fn from(err: serde_json::Error) -> Self {
         Self::SerializeDeserializeConfigError(err)
+    }
+}
+
+impl From<std::io::Error> for EnaError {
+    fn from(err: std::io::Error) -> Self {
+        Self::IoError(err)
     }
 }
