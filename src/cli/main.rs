@@ -1,4 +1,7 @@
-#[cfg(feature = "cli")]
+use arguments::LaunchOptions;
+
+mod arguments;
+
 fn main() {
-    println!("oi")
+    let arguments = LaunchOptions::build();
 }
