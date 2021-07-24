@@ -1,4 +1,5 @@
 use std::{
+    fmt::Display,
     fs::{self, DirEntry, File},
     io::{Read, Write},
     path::PathBuf,
@@ -106,9 +107,24 @@ impl ConfigFilePath for ConfigFile {
     }
 }
 
+pub trait ProfileGetters {
+    fn get_name(&self) -> &str;
+    fn get_path(&self) -> &PathBuf;
+}
+
 pub struct Profile {
     name: String,
     path: PathBuf,
+}
+
+impl ProfileGetters for Profile {
+    fn get_name(&self) -> &str {
+        &self.name
+    }
+
+    fn get_path(&self) -> &PathBuf {
+        &self.path
+    }
 }
 
 impl From<DirEntry> for Profile {
@@ -122,6 +138,10 @@ impl From<DirEntry> for Profile {
 
         Self { name, path }
     }
+}
+
+pub trait ProfilesOperations: Display {
+    fn get_path(&self) -> &PathBuf;
 }
 
 pub struct Profiles {
@@ -153,5 +173,21 @@ impl Profiles {
             path,
             profiles: sub_paths,
         }
+    }
+}
+
+impl ProfilesOperations for Profiles {
+    fn get_path(&self) -> &PathBuf {
+        &self.path
+    }
+}
+
+impl Display for Profiles {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let values = self
+            .profiles
+            .iter()
+            .fold(String::new(), |acc, new| format!("{}, {}", acc, &new.name));
+        write!(f, "{}", values)
     }
 }
