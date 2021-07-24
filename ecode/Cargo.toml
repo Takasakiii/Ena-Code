@@ -16,13 +16,3 @@ categories = ["command-line-utilities"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-dirs = "3.0.2"
-serde = { version = "1.0.126", features = ["derive"] }
-serde_yaml = { version = "0.8.17", optional = true }
-serde_json = { version = "1.0.64", optional = true }
-clap = "3.0.0-beta.2"
-
-[features]
-default = ["config_yml"]
-config_yml = ["serde_yaml"]
-config_json = ["serde_json"]
