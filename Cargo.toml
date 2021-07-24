@@ -15,10 +15,12 @@ categories = ["command-line-utilities"]
 [lib]
 name = "ena_code_core"
 path = "src/core/lib.rs"
+crate-type = ["cdylib"]
 
 [[bin]]
-name = "ena_code_cli"
+name = "ecode"
 path = "src/cli/main.rs"
+required-features = ["cli"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [dependencies]
@@ -26,9 +28,11 @@ dirs = "3.0.2"
 serde = { version = "1.0.126", features = ["derive"] }
 serde_yaml = { version = "0.8.17", optional = true }
 serde_json = { version = "1.0.64", optional = true }
+clap = { version = "3.0.0-beta.2", optional = true }
+
+
 [features]
-
-
-default = ["config_yml"]
+default = ["config_yml", "cli"]
 config_yml = ["serde_yaml"]
 config_json = ["serde_json"]
+cli = ["clap"]
