@@ -1,3 +1,4 @@
+pub mod args;
 mod config;
 pub mod errors;
 pub mod path_finder;
