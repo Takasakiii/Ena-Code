@@ -17,7 +17,7 @@ pub enum SubCommands {
     #[clap(about = "Incia o Visual Studio Code com um profile.")]
     Run(Run),
     #[clap(about = "Lista os profiles")]
-    Ls(List),
+    Ls,
     #[clap(about = "Remove um profile")]
     Rm,
 }
@@ -34,12 +34,6 @@ pub struct Run {
         about = "Changes the 'derive' of the 'Default' profile to another one."
     )]
     pub base_derive: Option<String>,
-}
-
-#[derive(Clap)]
-pub struct List {
-    #[clap(long)]
-    a: bool,
 }
 
 impl LaunchOptions {
