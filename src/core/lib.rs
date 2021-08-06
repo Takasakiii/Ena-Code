@@ -1,5 +1,6 @@
 mod config;
 pub mod errors;
+mod launcher;
 mod path_finder;
 mod path_manager;
 

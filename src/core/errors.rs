@@ -14,6 +14,7 @@ pub enum EnaError {
     VsCodeNotFound,
     PathToStrNone,
     IoError(std::io::Error),
+    NotImplemented,
 }
 
 impl Display for EnaError {

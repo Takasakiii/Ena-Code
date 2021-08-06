@@ -1,8 +1,10 @@
 use std::{
+    collections::HashMap,
     fmt::Display,
     fs::{self, DirEntry, File},
     io::{Read, Write},
     path::PathBuf,
+    rc::Rc,
 };
 
 use crate::{
@@ -119,7 +121,7 @@ pub trait ProfileGetters {
 }
 
 pub struct Profile {
-    name: String,
+    name: Rc<String>,
     path: PathBuf,
 }
 
@@ -142,17 +144,21 @@ impl From<DirEntry> for Profile {
             .to_owned();
         let path = dir.path();
 
-        Self { name, path }
+        Self {
+            name: Rc::new(name),
+            path,
+        }
     }
 }
 
 pub trait ProfilesOperations: Display {
     fn get_path(&self) -> &PathBuf;
+    fn check_profile_exists(&self, profile_name: &str) -> bool;
 }
 
 pub struct Profiles {
     path: PathBuf,
-    profiles: Vec<Profile>,
+    profiles: HashMap<Rc<String>, Profile>,
 }
 
 impl Profiles {
@@ -172,8 +178,15 @@ impl Profiles {
 
         let sub_paths = fs::read_dir(&path)
             .expect("Não foi possivel acessar a pasta dos profiles.")
-            .map(|el| Profile::from(el.expect("Problemas para ler os profiles.")))
-            .collect::<Vec<_>>();
+            .map(|el| {
+                let el = el.expect("Problemas para ler os profiles.");
+
+                let profile = Profile::from(el);
+                let profile_name = profile.name.clone();
+
+                (profile_name, profile)
+            })
+            .collect::<HashMap<_, _>>();
 
         Self {
             path,
@@ -186,6 +199,11 @@ impl ProfilesOperations for Profiles {
     fn get_path(&self) -> &PathBuf {
         &self.path
     }
+
+    fn check_profile_exists(&self, profile_name: &str) -> bool {
+        self.profiles
+            .contains_key(&Rc::new(profile_name.to_owned()))
+    }
 }
 
 impl Display for Profiles {
@@ -193,7 +211,7 @@ impl Display for Profiles {
         let values = self
             .profiles
             .iter()
-            .fold(String::new(), |acc, new| format!("{}, {}", acc, &new.name));
+            .fold(String::new(), |acc, new| format!("{}, {}", acc, &*new.0));
         write!(f, "{}", values)
     }
 }
