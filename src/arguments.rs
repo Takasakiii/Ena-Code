@@ -1,6 +1,6 @@
-use clap::{AppSettings, Clap};
+use clap::{AppSettings, Parser};
 
-#[derive(Clap, Debug)]
+#[derive(Parser, Debug)]
 #[clap(
     name = "Ena-Code",
     about = "A simple profile switcher for Visual Studio Code\n\nStill in alpha."
