@@ -1,4 +1,4 @@
-use clap::{AppSettings, Parser};
+use clap::Parser;
 
 #[derive(Parser, Debug)]
 #[clap(
