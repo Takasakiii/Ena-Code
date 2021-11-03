@@ -6,7 +6,6 @@ use clap::{AppSettings, Parser};
     about = "A simple profile switcher for Visual Studio Code\n\nStill in alpha."
 )]
 #[clap(version = env!("CARGO_PKG_VERSION"), author = "Takasakiii <lucasmc2709@live.com>")]
-#[clap(setting = AppSettings::ColoredHelp)]
 pub struct LaunchOptions {
     #[clap(short, long, about = "Enables verbose mode for debugging.")]
     pub verbose: bool,
