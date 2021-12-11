@@ -7,17 +7,19 @@ use clap::Parser;
 )]
 #[clap(version = env!("CARGO_PKG_VERSION"), author = "Takasakiii <lucasmc2709@live.com>")]
 pub struct LaunchOptions {
-    #[clap(short, long, about = "Enables verbose mode for debugging.")]
+    /// Enables verbose mode for debugging
+    #[clap(short, long)]
     pub verbose: bool,
-    #[clap(default_value = "Default", about = "Profile name.")]
+
+    /// Profile name
+    #[clap(default_value = "Default")]
     pub profile: String,
-    #[clap(about = "Workflow folder. ")]
+
+    /// Workflow folder
     pub path: Option<String>,
-    #[clap(
-        short,
-        long,
-        about = "Changes the 'derive' of the 'Default' profile to another one."
-    )]
+
+    /// Changes the 'derive' of the 'Default' profile to another one
+    #[clap(short, long)]
     pub base_derive: Option<String>,
 }
 
