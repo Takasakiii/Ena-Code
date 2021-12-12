@@ -11,9 +11,9 @@ use std::{
 
 pub fn launch(args: &LaunchOptions, config: &Config) {
     let path = Path::new(&config.profiles_folder);
-    let joined_path = path.join(&remove_caracteres(&args.profile, &config));
+    let joined_path = path.join(&remove_caracteres(&args.profile, config));
     let extension_folder = joined_path.join("extensions");
-    let configs_folder = config_folder(&config, &joined_path, &path);
+    let configs_folder = config_folder(config, &joined_path, path);
 
     let extension_folder = extension_folder.to_str();
     let configs_folder = configs_folder.to_str();
@@ -23,7 +23,7 @@ pub fn launch(args: &LaunchOptions, config: &Config) {
             None => {
                 if !check_profile_exists(&args.profile) {
                     let user_response = scanln::scanln!(
-                        "O profile {} não existe, gostaria de cria-lo [s,N]: ",
+                        "O profile {} não existe, gostaria de criá-lo? [s/N]: ",
                         &args.profile
                     );
 
