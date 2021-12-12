@@ -37,7 +37,7 @@ pub fn get_bin_or_cmd_name<'a>() -> &'a str {
 fn get_home_dir() -> Result<PathBuf, String> {
     let home_dir = dirs::home_dir();
     match home_dir {
-        None => Err("Não foi possivel localizar a pasta home do usuario.".into()),
+        None => Err("Não foi possível localizar a pasta home do usuário.".into()),
         Some(data) => Ok(data),
     }
 }
@@ -55,7 +55,7 @@ pub fn create_or_get_ena_home_folder() -> Result<PathBuf, Box<dyn std::error::Er
     let mut home_folder = get_home_dir()?;
 
     if let Err(why) = read_enarc(&mut home_folder) {
-        println!("Ouve um erro ao ler o .enarc\n\nMotivo: {:?}", why);
+        println!("Houve um erro ao ler o .enarc\n\nMotivo: {:?}", why);
     }
     home_folder = home_folder.join(".ena-code");
     let path_ena_code_folder = Path::new(&home_folder);
