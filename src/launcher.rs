@@ -23,7 +23,7 @@ pub fn launch(args: &LaunchOptions, config: &Config) {
             None => {
                 if !check_profile_exists(&args.profile) {
                     let user_response = scanln::scanln!(
-                        "O profile {} não existe, gostaria de cria-lo [s,N]: ",
+                        "O profile {} não existe, gostaria de criá-lo? [s/N]: ",
                         &args.profile
                     );
 

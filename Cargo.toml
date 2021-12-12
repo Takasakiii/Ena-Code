@@ -19,9 +19,12 @@ categories = ["command-line-utilities"]
 serde_yaml = "^0.8.17"
 fs_extra = "^1.2.0"
 dirs = "^3.0.1"
-clap = "3.0.0-beta.5"
 scanln = "0.1.1"
 
 [dependencies.serde]
 version = "^1.0.125"
+features = ["derive"]
+
+[dependencies.clap]
+version = "3.0.0-rc.4"
 features = ["derive"]
