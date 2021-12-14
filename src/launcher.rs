@@ -72,7 +72,7 @@ pub fn launch(args: &LaunchOptions, config: &Config) {
 
         match cmd_exec {
             Err(why) => println!(
-                "Problema ao iniciar o processo do visual studio code: {:?}",
+                "Error starting Visual Studio Code's process: {:?}",
                 why
             ),
             Ok(out) => {
@@ -82,7 +82,7 @@ pub fn launch(args: &LaunchOptions, config: &Config) {
             }
         }
     } else {
-        println!("Um problema ao contruir o launch do visual studio code.")
+        println!("Error building Visual Studio Code's launch.")
     }
 }
 
@@ -110,7 +110,7 @@ fn create_profile(profile_name: &str, profile_fonte: &str) {
     options.copy_inside = true;
 
     if let Err(why) = copy(&dir_origin, &dir_destino, &options) {
-        println!("Não foi possivel derivar do profile: {}, iniciando a partir de um novo.\n{{Origem: {:?}, Destinho: {:?}}}\n\nMotivo: {}", profile_fonte, dir_origin, dir_destino, why);
+        println!("Couldn't derive from the profile {}, initializating from a new.\n{{Origin: {:?}, Target: {:?}}}\n\nReason: {}", profile_fonte, dir_origin, dir_destino, why);
     }
 }
 

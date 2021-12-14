@@ -36,7 +36,7 @@ pub fn get_bin_or_cmd_name<'a>() -> &'a str {
 fn get_home_dir() -> Result<PathBuf, String> {
     let home_dir = dirs::home_dir();
     match home_dir {
-        None => Err("Não foi possível localizar a pasta home do usuário.".into()),
+        None => Err("Couldn't find the user's home folder.".into()),
         Some(data) => Ok(data),
     }
 }

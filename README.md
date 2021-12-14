@@ -1,27 +1,31 @@
 # Ena Code
 
-É um pequeno trocador de perfil para Visual Studio Code, fazendo que possa segregar configs e extensões de acordo com o contexto/lang.
+A little profile switcher for Visual Studio Code, making it possible to segregate configs and extensions according to context/lang.
 
-**Esse projeto ainda é um alfa, muitos bugs e coisas inacabadas, mas sua principal função é utilizavel.**
+**This project is still in alpha and may have many bugs and unfinished things, but your main function is usable.**
 
+## Bulding and installation:
 
-## Contrução e instalação:
+### Dependencies:
+- [Rust](https://www.rust-lang.org/)
 
-### Dependencias:
- - [Rust](https://www.rust-lang.org/)
-### Passos:
- - Na pasta do projeto, use o cargo para instalar o projeto:
- ```sh
- $ cargo install ecode
- ```
+### Steps:
+In the project folder, use cargo to install the project:
+```sh
+$ cargo install --path .
+```
 
- ## Uso:
- ```sh
+Or install the latest version from [crates.io](https://crates.io/crates/ecode):
+```sh
+$ cargo install ecode
+```
+
+## Use:
+```sh
 $ ecode [profile] [path]
 ```
-> Sendo [profile] e [path] argumentos opcionais.
+> Being [profile] and [path] optional arguments.
 
-Ena Code usa {userfolder}/.ena-code para salvar os profiles e configurações
-> Pasta userprofile pode ser trocada atraves da criação de um arquivo na userprofile chamado `.enarc` (esse arquivo usa o formato de codificação yaml) com o atributo `enaHomePath`.
+Ena Code uses `{userFolder}`/.ena-code to save the profiles and settings.
 
-Nas configurações é possivel mudar a pasta home dos profiles, para backup ou melhor localização e mudar o execultavel do vs code.
+In the configuration file (`.ena-code/config.yml`), it's possible to change the profiles folder, the VSCode executable, the base profile, if the configs are shared between the profiles and if the default folder will be the current folder.
