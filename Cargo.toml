@@ -21,8 +21,11 @@ path = "src/ecode/main.rs"
 
 [[bin]]
 name = "ecode-manager"
-path = "src/ecode-manager/main.rs"
+path = "src/manager/main.rs"
 
+[lib]
+name = "ecode_core"
+path = "src/core/lib.rs"
 
 [dependencies]
 serde_yaml = "^0.8.17"

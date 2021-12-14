@@ -1,10 +1,8 @@
-mod arguments;
-mod configs;
 mod launcher;
-use arguments::LaunchOptions;
-use configs::Config;
+use ecode_core::arguments::LaunchOptions;
+use ecode_core::configs::Config;
 
-extern crate fs_extra;
+// extern crate fs_extra;
 
 fn main() {
     let args = LaunchOptions::build();

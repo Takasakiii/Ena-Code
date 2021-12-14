@@ -1,6 +1,6 @@
 use fs_extra::dir::{copy, CopyOptions};
 
-use crate::{
+use ecode_core::{
     arguments::LaunchOptions,
     configs::{dirs_and_files, Config},
 };
