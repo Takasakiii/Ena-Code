@@ -15,6 +15,15 @@ categories = ["command-line-utilities"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[[bin]]
+name = "ecode"
+path = "src/ecode/main.rs"
+
+[[bin]]
+name = "ecode-manager"
+path = "src/ecode-manager/main.rs"
+
+
 [dependencies]
 serde_yaml = "^0.8.17"
 fs_extra = "^1.2.0"
