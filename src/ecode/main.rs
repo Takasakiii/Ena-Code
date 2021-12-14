@@ -1,6 +1,7 @@
 mod launcher;
-use ecode_core::arguments::LaunchOptions;
+mod arguments;
 use ecode_core::configs::Config;
+use arguments::LaunchOptions;
 
 // extern crate fs_extra;
 

@@ -1,3 +1,7 @@
+mod actions;
+
+use actions::LaunchOptions;
+
 fn main() {
-    println!("Hello, world!");
+    LaunchOptions::build();
 }
