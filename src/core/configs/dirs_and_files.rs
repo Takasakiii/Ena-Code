@@ -58,9 +58,7 @@ pub fn create_or_get_ena_home_folder() -> Result<PathBuf, Box<dyn std::error::Er
 
 pub fn get_profiles_folder_path() -> PathBuf {
     let config = Config::get_config(false);
-    create_or_get_ena_home_folder()
-        .unwrap()
-        .join(config.profiles_folder)
+    Path::new(&config.profiles_folder).to_path_buf()
 }
 
 pub fn get_profile_path(profile_name: &str) -> PathBuf {
