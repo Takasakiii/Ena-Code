@@ -19,6 +19,7 @@ pub fn list_profiles() {
 
     let print_itens = itens
         .iter()
+        .filter(|item| *item != "Sem Permissão" && *item != "Default")
         .fold(String::new(), |acc, new| format!("{}{} ", acc, new));
 
     println!("{}", print_itens);

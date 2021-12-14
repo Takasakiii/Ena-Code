@@ -1,6 +1,6 @@
 use clap::{Parser, Subcommand};
 
-use crate::list;
+use crate::{list, remove};
 
 #[derive(Parser, Debug)]
 #[clap(
@@ -45,7 +45,7 @@ impl Profiles {
     fn handle(options: &Profiles) {
         match &options {
             Profiles::List => list::list_profiles(),
-            Profiles::Remove { .. } => {}
+            Profiles::Remove { name } => remove::remove(name),
         }
     }
 }

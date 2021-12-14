@@ -1,5 +1,6 @@
 mod actions;
 mod list;
+mod remove;
 
 use actions::{Commands, LaunchOptions};
 
