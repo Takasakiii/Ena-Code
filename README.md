@@ -10,14 +10,14 @@ A little profile switcher for Visual Studio Code, making it possible to segregat
 - [Rust](https://www.rust-lang.org/)
 
 ### Steps:
-In the project folder, use cargo to install the project:
-```sh
-$ cargo install --path .
-```
-
-Or install the latest version from [crates.io](https://crates.io/crates/ecode):
+Install the latest version from [crates.io](https://crates.io/crates/ecode):
 ```sh
 $ cargo install ecode
+```
+
+Or, in the project folder, use cargo to install from the source:
+```sh
+$ cargo install --path .
 ```
 
 ## Usage:
