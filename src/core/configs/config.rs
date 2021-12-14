@@ -61,11 +61,11 @@ impl Config {
 
                 if let Ok(yml) = serde_yaml::to_string(&obj) {
                     if let Err(why) = file.write_all(yml.as_bytes()) {
-                        println!("Config não pôde ser gravado, {:?}", why);
+                        println!("Config couldn't be written, {:?}", why);
                     }
                 }
             }
-            Err(why) => println!("Erro ao criar config.yml, {:?}", why),
+            Err(why) => println!("Error creating config.yml, {:?}", why),
         }
     }
 

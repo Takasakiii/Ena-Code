@@ -10,7 +10,7 @@ pub fn list_profiles() {
             if let Ok(profile) = profile {
                 profile.file_name().to_str().unwrap().to_string()
             } else {
-                "Sem Permissão".to_owned()
+                "Without permission".to_owned()
             }
         })
         .collect::<Vec<_>>();
@@ -19,7 +19,7 @@ pub fn list_profiles() {
 
     let print_itens = itens
         .iter()
-        .filter(|item| *item != "Sem Permissão" && *item != "Default")
+        .filter(|item| *item != "Without permission" && *item != "Default")
         .fold(String::new(), |acc, new| format!("{}{} ", acc, new));
 
     println!("{}", print_itens);

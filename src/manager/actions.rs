@@ -5,7 +5,7 @@ use crate::{list, remove};
 #[derive(Parser, Debug)]
 #[clap(
     name = "Ena-Code-Manager",
-    about = "Utilitario para gerir os profiles do Ena-Code"
+    about = "Utility to manage Ena-Code profiles"
 )]
 #[clap(version = env!("CARGO_PKG_VERSION"), author = "Takasakiii <lucasmc2709@live.com>")]
 pub struct LaunchOptions {
@@ -15,7 +15,7 @@ pub struct LaunchOptions {
 
 #[derive(Subcommand, Debug)]
 pub enum Commands {
-    /// Gerencia os profiles do Ena-Code
+    /// Manage Ena-Code profiles
     Profiles {
         #[clap(subcommand)]
         commands: Profiles,
@@ -24,11 +24,11 @@ pub enum Commands {
 
 #[derive(Subcommand, Debug)]
 pub enum Profiles {
-    /// Lista os profiles do Ena-Code
+    /// List Ena-Code profiles
     List,
-    /// Remove um profile do Ena-Code
+    /// Remove an Ena-Code profile
     Remove {
-        /// Nome do profile
+        /// Profile name
         name: String,
     },
 }
