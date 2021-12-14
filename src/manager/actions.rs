@@ -1,5 +1,7 @@
 use clap::{Parser, Subcommand};
 
+use crate::list;
+
 #[derive(Parser, Debug)]
 #[clap(
     name = "Ena-Code-Manager",
@@ -29,6 +31,23 @@ pub enum Profiles {
         /// Nome do profile
         name: String,
     },
+}
+
+impl Commands {
+    pub fn handle(options: &LaunchOptions) {
+        match &options.commands {
+            Commands::Profiles { commands } => Profiles::handle(commands),
+        }
+    }
+}
+
+impl Profiles {
+    fn handle(options: &Profiles) {
+        match &options {
+            Profiles::List => list::list_profiles(),
+            Profiles::Remove { .. } => {}
+        }
+    }
 }
 
 impl LaunchOptions {

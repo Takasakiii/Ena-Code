@@ -1,7 +1,9 @@
 mod actions;
+mod list;
 
-use actions::LaunchOptions;
+use actions::{Commands, LaunchOptions};
 
 fn main() {
-    LaunchOptions::build();
+    let opt = LaunchOptions::build();
+    Commands::handle(&opt);
 }
