@@ -20,11 +20,11 @@ pub fn launch(args: &LaunchOptions, config: &Config) {
             None => {
                 if !check_profile_exists(&args.profile) {
                     let user_response = scanln::scanln!(
-                        "O profile {} não existe, gostaria de criá-lo? [s/N]: ",
+                        "The profile {} doesn't exist. Do you want to create it? [y/N]: ",
                         &args.profile
                     );
 
-                    if user_response.ne("s") {
+                    if user_response.ne("y") {
                         return;
                     }
                 }

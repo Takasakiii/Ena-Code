@@ -40,7 +40,7 @@ pub fn get_bin_or_cmd_name<'a>() -> &'a str {
 pub fn get_home_dir() -> Result<PathBuf, String> {
     let home_dir = dirs::home_dir();
     match home_dir {
-        None => Err("Não foi possível localizar a pasta home do usuário.".into()),
+        None => Err("Couldn't find user's home folder.".into()),
         Some(data) => Ok(data),
     }
 }
@@ -82,7 +82,7 @@ pub fn create_profile(profile_name: &str, profile_fonte: &str) {
     options.copy_inside = true;
 
     if let Err(why) = copy(&dir_origin, &dir_destino, &options) {
-        println!("Não foi possivel derivar do profile: {}, iniciando a partir de um novo.\n{{Origem: {:?}, Destinho: {:?}}}\n\nMotivo: {}", profile_fonte, dir_origin, dir_destino, why);
+        println!("Couldn't derive from the profile {}, initializating from a new.\n{{Origin: {:?}, Target: {:?}}}\n\nReason: {}", profile_fonte, dir_origin, dir_destino, why);
     }
 }
 
