@@ -22,9 +22,15 @@ $ cargo install --path .
 
 ## Usage:
 ```sh
-$ ecode [profile] [path]
+$ ecode <PROFILE> <PATH>
 ```
-> Being [profile] and [path] optional arguments.
+> Being PROFILE and PATH optional arguments.
+
+### Flags:
+- `-b <PROFILE>`:
+    The profile used as base to new profiles. (Default: `Default`)
+- `-v`
+    Enables verbose mode for debugging
 
 Ena Code uses `{userFolder}`/.ena-code folder to save the profiles and settings.
 
