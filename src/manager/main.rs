@@ -1,4 +1,5 @@
 mod actions;
+mod config;
 mod list;
 mod remove;
 

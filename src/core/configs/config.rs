@@ -1,7 +1,7 @@
 use crate::configs::dirs_and_files;
 use serde::{Deserialize, Serialize};
 use std::{
-    fs::{self, File},
+    fs::{self, File, OpenOptions},
     io::prelude::*,
     path::{Path, PathBuf},
 };
@@ -36,7 +36,7 @@ impl Config {
         }
     }
 
-    fn get_config_raw() -> Self {
+    pub fn get_config_raw() -> Self {
         let mut config = Self::new();
 
         let config_file_path = get_ena_config_path();
@@ -52,7 +52,7 @@ impl Config {
         config
     }
 
-    fn create_config() {
+    pub fn create_config() {
         let config_file_path = get_ena_config_path();
 
         match File::create(config_file_path) {
@@ -78,6 +78,22 @@ impl Config {
             println!("{:?}", &config)
         }
         config
+    }
+
+    pub fn save_config(&self) {
+        let ena_config_path = get_ena_config_path();
+
+        let string = serde_yaml::to_string(self).unwrap();
+        let mut file = OpenOptions::new()
+            .read(false)
+            .write(true)
+            .append(false)
+            .create(true)
+            .open(ena_config_path)
+            .unwrap();
+
+        let string_encoded = string.as_bytes();
+        file.write_all(string_encoded).unwrap();
     }
 }
 
