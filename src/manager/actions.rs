@@ -5,7 +5,7 @@ use crate::{config, list, remove};
 #[derive(Parser, Debug)]
 #[clap(
     name = "Ena-Code-Manager",
-    about = "Utility to manage Ena-Code profiles"
+    about = "Utility to manage Ena-Code profiles and configurations"
 )]
 #[clap(version = env!("CARGO_PKG_VERSION"), author = "Takasakiii <lucasmc2709@live.com>")]
 pub struct LaunchOptions {
@@ -40,29 +40,29 @@ pub enum Profiles {
 
 #[derive(Subcommand, Debug)]
 pub enum EnaConfigs {
-    /// Disable segregation of config by profile, making profiles share the same config.
+    /// Disable segregation of config by profile, making profiles share the same config
     SharedProfilesConfigs {
         #[clap(subcommand)]
         enable: EnableDisable,
     },
-    /// Define that Ena-Code should always consider that if it doesn't pass the project path, use the current folder.
+    /// Set if Ena-Code should always use the current path if the path is not provided
     UseCurrentFolder {
         #[clap(subcommand)]
         enable: EnableDisable,
     },
-    /// Set path to Visual Studio Code executable.
+    /// Set the path to Visual Studio Code executable
     VsCodePath { path: String },
-    /// Profile where Ena-Code uses it as a base for new profiles (except those created with the -b flag).
+    /// Which profile Ena-Code will use as a base for new profiles by default (except those created with the -b flag)
     DefaultProfile { profile: String },
-    /// Location where Ena-Code should use to save profiles.
+    /// Location where Ena-Code should use to save profiles
     ProfilesFolder { path: String },
 }
 
 #[derive(Subcommand, Debug)]
 pub enum EnableDisable {
-    /// Activate the configuration.
+    /// Enable the configuration
     Enable,
-    /// Disable the configuration.
+    /// Disable the configuration
     Disable,
 }
 

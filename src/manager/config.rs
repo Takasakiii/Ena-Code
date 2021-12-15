@@ -16,7 +16,7 @@ pub fn default_profile(name: &str) {
         config.save_config();
     } else {
         println!(
-            "It was not possible to use the {} profile as the default because it does not exist.",
+            "It was not possible to use the profile {} as default as it does not exist.",
             &name
         );
     }
@@ -29,7 +29,7 @@ pub fn profiles_folder(path: &str) {
         config.profiles_folder = path.to_owned();
         config.save_config();
     } else {
-        println!("Entered path is not a folder.");
+        println!("The path {} is not a folder.", path);
     }
 }
 
@@ -46,6 +46,6 @@ pub fn vs_code_path(path: &str) {
         config.vs_code_path = path.to_owned();
         config.save_config();
     } else {
-        println!("Entered path is not a file.");
+        println!("The path {} is not a file.", path);
     }
 }
