@@ -64,7 +64,7 @@ pub fn launch(args: &LaunchOptions, config: &Config) {
         match cmd_exec {
             Err(why) => println!(
                 "Error starting VSCode proccess: {:?}",
-                why1
+                why
             ),
             Ok(out) => {
                 if args.verbose {
