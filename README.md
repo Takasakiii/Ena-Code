@@ -22,7 +22,7 @@ $ cargo install --path .
 
 ## Usage:
 ```sh
-$ ecode <PROFILE> <PATH>
+$ ecode [PROFILE] [PATH]
 ```
 > Being PROFILE and PATH optional arguments.
 
