@@ -56,21 +56,15 @@ pub fn launch(args: &LaunchOptions, config: &Config) {
         let cmd_exec = Command::new(&config.vs_code_path[..])
             .arg(path_workflow)
             .arg("--extensions-dir")
-            .arg(match extension_folder {
-                Some(val) => val,
-                None => panic!("called `Option::unwrap()` on a `None` value"),
-            })
+            .arg(extension_folder.unwrap())
             .arg("--user-data-dir")
-            .arg(match configs_folder {
-                Some(val) => val,
-                None => panic!("called `Option::unwrap()` on a `None` value"),
-            })
+            .arg(configs_folder.unwrap())
             .output();
 
         match cmd_exec {
             Err(why) => println!(
-                "Problema ao iniciar o processo do visual studio code: {:?}",
-                why
+                "Error starting VSCode proccess: {:?}",
+                why1
             ),
             Ok(out) => {
                 if args.verbose {
@@ -79,6 +73,6 @@ pub fn launch(args: &LaunchOptions, config: &Config) {
             }
         }
     } else {
-        println!("Um problema ao contruir o launch do visual studio code.")
+        println!("Error building VSCode launch: extensions folder or configs folder is null.")
     }
 }
