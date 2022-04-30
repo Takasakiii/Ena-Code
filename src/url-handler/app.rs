@@ -1,9 +1,15 @@
 use ecode_core::actions;
-use iced::{button, pick_list, Align, Button, Column, Length, PickList, Row, Sandbox, Text};
+use iced::{
+    button, executor, pick_list, Align, Application, Button, Clipboard, Column, Command, Length,
+    PickList, Row, Text,
+};
+
+use crate::launcher;
 
 pub struct App {
     all_profiles: Vec<String>,
     selected: String,
+    url: String,
     profile_list: pick_list::State<String>,
     confirm_button: button::State,
 }
@@ -14,37 +20,50 @@ pub enum Message {
     Confirmed,
 }
 
-impl Sandbox for App {
+impl Application for App {
     type Message = Message;
 
-    fn new() -> Self {
+    type Executor = executor::Default;
+
+    type Flags = String;
+
+    fn new(flags: Self::Flags) -> (Self, Command<Message>) {
         let all_profiles = actions::get_profiles_list();
         let fist_item = all_profiles
             .first()
             .cloned()
             .unwrap_or_else(|| "".to_string());
 
-        App {
+        let app = App {
             all_profiles,
             profile_list: Default::default(),
             selected: fist_item,
             confirm_button: Default::default(),
-        }
+            url: flags,
+        };
+
+        let command = Command::none();
+
+        (app, command)
     }
 
     fn title(&self) -> String {
         String::from("Ena-Code VS Code Url Handler")
     }
 
-    fn update(&mut self, message: Self::Message) {
+    fn update(
+        &mut self,
+        message: Self::Message,
+        _clipboard: &mut Clipboard,
+    ) -> Command<Self::Message> {
         match message {
             Message::SetProfile(profile) => {
                 self.selected = profile;
             }
-            Message::Confirmed => {
-                println!("{}", self.selected);
-            }
+            Message::Confirmed => launcher::launch(&self.selected, &self.url),
         }
+
+        Command::none()
     }
 
     fn view(&mut self) -> iced::Element<'_, Self::Message> {
