@@ -60,7 +60,10 @@ impl Application for App {
             Message::SetProfile(profile) => {
                 self.selected = profile;
             }
-            Message::Confirmed => launcher::launch(&self.selected, &self.url),
+            Message::Confirmed => {
+                launcher::launch(&self.selected, &self.url);
+                std::process::exit(0);
+            }
         }
 
         Command::none()
