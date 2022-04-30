@@ -1,7 +1,7 @@
 
 [package]
 name = "ecode"
-version = "0.1.9"
+version = "1.0.0"
 authors = ["Takasakiii <lucasmc2709@live.com>"]
 edition = "2018"
 license = "Unlicense"
@@ -23,6 +23,11 @@ path = "src/ecode/main.rs"
 name = "ecode-manager"
 path = "src/manager/main.rs"
 
+[[bin]]
+name = "ecode-url-handler"
+path = "src/url-handler/main.rs"
+
+
 [lib]
 name = "ecode_core"
 path = "src/core/lib.rs"
@@ -32,11 +37,6 @@ serde_yaml = "^0.8.17"
 fs_extra = "^1.2.0"
 dirs = "4.0.0"
 scanln = "0.1.1"
-
-[dependencies.serde]
-version = "^1.0.125"
-features = ["derive"]
-
-[dependencies.clap]
-version = "3.0.0-rc.4"
-features = ["derive"]
+serde = { version = "1.0.136", features = ["derive"] }
+clap = { version = "3.0.0-rc.4", features = ["derive"] }
+iced = "0.3.0"
