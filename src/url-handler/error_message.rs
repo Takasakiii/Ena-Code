@@ -1,4 +1,6 @@
-use iced::{executor, window, Align, Application, Column, Command, Length, Row, Settings, Text};
+use iced::{
+    executor, window, Alignment, Application, Column, Command, Length, Row, Settings, Text,
+};
 
 #[derive(Default)]
 pub struct ErrorFlags {
@@ -28,11 +30,7 @@ impl Application for ErrorMessage {
         self.flags.title.clone()
     }
 
-    fn update(
-        &mut self,
-        _message: Self::Message,
-        _clipboard: &mut iced::Clipboard,
-    ) -> iced::Command<Self::Message> {
+    fn update(&mut self, _message: Self::Message) -> iced::Command<Self::Message> {
         Command::none()
     }
 
@@ -42,12 +40,12 @@ impl Application for ErrorMessage {
         let center_column = Column::new()
             .push(header_text)
             .width(Length::Fill)
-            .align_items(Align::Center);
+            .align_items(Alignment::Center);
 
         let row_center = Row::new()
             .push(center_column)
             .height(Length::Fill)
-            .align_items(Align::Center);
+            .align_items(Alignment::Center);
 
         row_center.into()
     }

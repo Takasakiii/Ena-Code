@@ -1,9 +1,9 @@
 
 [package]
 name = "ecode"
-version = "1.0.0"
+version = "1.0.1"
 authors = ["Takasakiii <lucasmc2709@live.com>"]
-edition = "2018"
+edition = "2021"
 license = "Unlicense"
 description = "Ena Code simple Visual Studio Code profile switcher."
 homepage = "https://github.com/Takasakiii/Ena-Code"
@@ -33,10 +33,10 @@ name = "ecode_core"
 path = "src/core/lib.rs"
 
 [dependencies]
-serde_yaml = "^0.8.17"
-fs_extra = "^1.2.0"
+serde_yaml = "0.8.24"
+fs_extra = "1.2.0"
 dirs = "4.0.0"
 scanln = "0.1.1"
-serde = { version = "1.0.136", features = ["derive"] }
-clap = { version = "3.0.0-rc.4", features = ["derive"] }
-iced = "0.3.0"
+serde = { version = "1.0.137", features = ["derive"] }
+clap = { version = "3.1.18", features = ["derive"] }
+iced = "0.4.2"

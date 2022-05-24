@@ -1,7 +1,7 @@
 use ecode_core::actions;
 use iced::{
-    button, executor, pick_list, Align, Application, Button, Clipboard, Column, Command, Length,
-    PickList, Row, Text,
+    button, executor, pick_list, Alignment, Application, Button, Column, Command, Length, PickList,
+    Row, Text,
 };
 
 use crate::launcher;
@@ -51,11 +51,7 @@ impl Application for App {
         String::from("Ena-Code VS Code Url Handler")
     }
 
-    fn update(
-        &mut self,
-        message: Self::Message,
-        _clipboard: &mut Clipboard,
-    ) -> Command<Self::Message> {
+    fn update(&mut self, message: Self::Message) -> Command<Self::Message> {
         match message {
             Message::SetProfile(profile) => {
                 self.selected = profile;
@@ -85,7 +81,7 @@ impl Application for App {
 
         let column_center = Column::new()
             .width(Length::Fill)
-            .align_items(Align::Center)
+            .align_items(Alignment::Center)
             .spacing(20)
             .push(header_text)
             .push(profiles_list)
@@ -95,7 +91,7 @@ impl Application for App {
             .width(Length::Fill)
             .height(Length::Fill)
             .push(column_center)
-            .align_items(Align::Center)
+            .align_items(Alignment::Center)
             .into()
     }
 }
