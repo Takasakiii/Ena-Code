@@ -2,8 +2,6 @@
 
 A little profile switcher for Visual Studio Code, making it possible to segregate configs and extensions according to the context/lang.
 
-**This project is still in alpha and may have many bugs and unfinished things, but your main function is usable.**
-
 ## Bulding and installation:
 
 ### Dependencies:
@@ -77,6 +75,43 @@ All subcommands also have a `help` command, showing how you can use it, like:
 ```sh
 $ ecode-manager config help
 ```
+
+## Ena-Code URL Handler
+Ena-Code now has an URL handler, neccessary for handling `vscode://` URLs.
+
+> Note that the URL Handler still doesn't work properly on Windows systems.
+
+### Usage:
+```sh
+$ ecode-url-handler <URL>
+```
+
+This will open a graphical interface that lets you choose the profile to open the URL with:
+![URL Handler profile select screen](https://i.imgur.com/wkWPbWY.png)
+
+If you want to open the URLs directly from browser, without using the command line, you can use a custom scheme handler.
+
+### Linux example XDG .desktop file
+File based on VSCode's [code-url-handler.desktop](https://github.com/microsoft/vscode/blob/main/resources/linux/code-url-handler.desktop)
+```ini
+[Desktop Entry]
+Name=Ena-Code URL Handler
+Comment=URL Handler for Ena-Code
+GenericName=Text Editor
+Exec=/path/to/ecode-url-handler %U
+Type=Application
+NoDisplay=true
+StartupNotify=true
+Categories=Utility;TextEditor;Development;IDE;
+MimeType=x-scheme-handler/vscode;
+Keywords=vscode;
+```
+
+You can put this file in your `~/.local/share/applications`. After running:
+```sh
+$ update-desktop-database ~/.local/share/applications
+```
+Ena-Code URL Handler will probably be available while handling `vscode://` URLs.
 
 ## License
 This project is licensed under [The Unlicense](https://unlicense.org/) license, belonging to the public domain.
