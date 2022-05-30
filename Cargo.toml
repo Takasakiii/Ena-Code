@@ -1,7 +1,7 @@
 
 [package]
 name = "ecode"
-version = "1.0.1"
+version = "1.0.2"
 authors = ["Takasakiii <lucasmc2709@live.com>"]
 edition = "2021"
 license = "Unlicense"
@@ -39,4 +39,4 @@ dirs = "4.0.0"
 scanln = "0.1.1"
 serde = { version = "1.0.137", features = ["derive"] }
 clap = { version = "3.1.18", features = ["derive"] }
-iced = "0.4.2"
+iced = {version = "0.4", features = ["glow"]}
