@@ -113,5 +113,13 @@ $ update-desktop-database ~/.local/share/applications
 ```
 Ena-Code URL Handler will probably be available while handling `vscode://` URLs.
 
+## WSL
+
+To run in WSL use the .exe extension in the command:
+
+```sh
+ecode.exe [PROFILE] [PATH]
+```
+
 ## License
 This project is licensed under [The Unlicense](https://unlicense.org/) license, belonging to the public domain.
